@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import styles from './Overview.module.css';
+import './Overview.css';
 
 function Overview() {
   return (
