@@ -155,12 +155,33 @@
 }
 
 /* --- STAGGERED ANIMATIONS --- */
-.fade-in {
+/* .fade-in {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
+} */
+/* 1. Hide the elements by default so they don't show before fading */
+.expanded-menu-content .fade-in {
+    opacity: 0;
 }
 
+/* 2. ONLY run the animation when the parent menu becomes active */
+/* Change the 0.6s to 1.5s (or whatever speed feels right) */
+.expanded-menu-content.active .fade-in {
+    animation: menuFadeInEffect 1.5s ease-in-out forwards; 
+}
+
+/* 3. The actual fade animation */
+@keyframes menuFadeInEffect {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); /* Optional: adds a nice little slide-up effect */
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
 .navbar-container.expanded .expanded-menu-content.active .fade-in {
     opacity: 1;
     transform: translateY(0);

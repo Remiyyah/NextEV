@@ -1,0 +1,196 @@
+/* --- CORE STYLES --- */
+:root {
+  --gold-champagne: #D3C1A5; /* Used for headings, labels, and checkbox */
+  --off-white: #FFFFFF; /* Main text, input background */
+  --dark-gold: #B09F7F; /* A slightly darker gold for the italic 'Log' span */
+  --light-grey-text: #B0B0B0; /* Placeholder text */
+  --input-radius: 4px; /* Slight rounded corners on inputs */
+}
+
+/* Base styles to prevent browser conflicts */
+.custom-login-container, 
+.custom-login-box * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-login-container {
+  /* Assumes background image is in public folder */
+  background: url('/img/login-bg.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Use fonts added to index.html or define good system fallbacks */
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Typing Text from previous solution */
+.typing-text {
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* --- THE LOGIN BOX (Bespoke styling to match image) --- */
+.custom-login-box {
+  width: 480px; /* Slightly wider than the previous box for the new layout */
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.95); /* Nearly solid black, very sophisticated */
+  color: white;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10; /* Ensure it floats above other content */
+  cursor: move;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Heading Styling */
+.login-heading {
+  font-size: 40px;
+  color: var(--gold-champagne);
+  margin-bottom: 30px;
+  line-height: 1.1;
+  font-weight: 400; /* Regular weight serif */
+  /* Use fonts defined in index.html, fallbacks */
+  font-family: 'Crimson Pro', 'Playfair Display', Georgia, serif; 
+}
+
+/* The crucial italic 'Log' */
+.italic-log {
+  color: var(--dark-gold); /* A slightly different gold for depth */
+  font-style: italic;
+  font-family: 'Crimson Pro', 'Playfair Display', Georgia, serif; 
+}
+
+/* Sub-heading text styling */
+.sub-heading-text {
+  font-size: 13.5px;
+  color: var(--off-white);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* --- INPUTS AND LABELS --- */
+.custom-input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.custom-input-group label {
+  font-size: 11px;
+  color: var(--gold-champagne);
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.custom-input-group input {
+  padding: 15px;
+  font-size: 15px;
+  background-color: var(--off-white);
+  border: none;
+  border-radius: var(--input-radius);
+  color: black; /* Input text color */
+  width: 100%;
+}
+
+/* Custom placeholder styling */
+.custom-input-group input::placeholder {
+  color: var(--light-grey-text);
+  font-weight: 400;
+}
+
+.custom-input-group input:focus {
+  outline: 2px solid var(--gold-champagne); /* Sophisticated focus effect */
+}
+
+/* --- CUSTOM CHECKBOX (The hardest part to match) --- */
+.custom-form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 13px;
+  color: var(--off-white);
+}
+
+.checkbox-wrapper {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin-right: 12px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  opacity: 0; /* Hide default browser checkbox */
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.checkbox-wrapper label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: 1.5px solid var(--gold-champagne); /* The gold circle ring */
+  border-radius: 50%; /* Circle shape */
+  cursor: pointer;
+  pointer-events: none; /* Let the underlying hidden input catch clicks */
+}
+
+/* Custom filled/checked state logic */
+.checkbox-wrapper input[type="checkbox"]:checked + label {
+  background-color: var(--gold-champagne); /* Fill circle when checked */
+  border-color: var(--gold-champagne);
+}
+
+/* optional: if you want an outline around the filled circle for clarity:
+.checkbox-wrapper input[type="checkbox"]:checked + label {
+    border-color: #000;
+    box-shadow: 0 0 0 2px var(--gold-champagne);
+}
+*/
+
+/* --- THE NEW LOG IN BUTTON --- */
+.custom-login-btn {
+  background-color: var(--gold-champagne);
+  color: black;
+  border: none;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: var(--input-radius);
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.2s;
+}
+
+.custom-login-btn:hover {
+  background-color: var(--dark-gold);
+}
+
+/* Re-using fade-in animation, but scoping to new custom class */
+.custom-fade-in {
+  animation: fadeInEffectCustom 0.8s ease-in forwards;
+}
+
+@keyframes fadeInEffectCustom {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

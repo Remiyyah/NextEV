@@ -8,6 +8,8 @@ import Overview from './components/Overview';
 import FeatureCars from './components/FeaturedCars';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import Login from './components/Login';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // function App() {
 //   return (
 //     <div className="App">
@@ -33,20 +35,36 @@ import Header from './components/Header';
 //     </div>
 //   );
 // }
-function App(){
+function App() {
   return (
-    <div className='App'>
-      <PromoBar />
-      <Navbar />
-      <ContentSection />
-      <Header />
-      <FeaturedParts />
-      <Overview />
-      <FeatureCars />
-      <Footer />
-      
-    </div>
-  )
+    <Router>
+      <div className='App'>
+        {/* Components placed OUTSIDE of <Routes> will appear on every single page */}
+        <PromoBar />
+        <Navbar />
+
+        <Routes>
+          {/* Main Home Page Route */}
+          <Route 
+            path="/" 
+            element={
+              <>
+                <ContentSection />
+                <Header />
+                <FeaturedParts />
+                <Overview />
+                <FeatureCars />
+                <Footer />
+              </>
+            } 
+          />
+
+          {/* Login Page Route */}
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
