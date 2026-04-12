@@ -1,5 +1,9 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Amplify } from 'aws-amplify';
+
+// UI Components
 import './App.css';
-import './components/Navbar';
 import Navbar from './components/Navbar';
 import PromoBar from './components/PromoBar';
 import ContentSection from './components/ContentSection';
@@ -9,37 +13,25 @@ import FeatureCars from './components/FeaturedCars';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Login from './components/Login';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src="Octocat.png" className="App-logo" alt="logo" />
-//         <p>
-//           GitHub Codespaces <span className="heart">♥️</span> React
-//         </p>
-//         <p className="small">
-//           Edit <code>src/App.jsx</code> and save to reload.
-//         </p>
-//         <p>
-//           <a
-//             className="App-link"
-//             href="https://reactjs.org"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             Learn React
-//           </a>
-//         </p>
-//       </header>
-//     </div>
-//   );
-// }
+
+// Configure Amplify with your Cognito details (Amplify v6 syntax)
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: 'us-east-1_r4DfKXFNh', // e.g., 'us-east-1_xxxxxxxxx' - Get this from AWS!
+      userPoolClientId: '3cg3etnooklgb3e25tk08rad59', // Kept from your previous code
+      region: 'us-east-1',
+      loginWith: {
+        email: true,
+      }
+    }
+  }
+});
+
 function App() {
   return (
     <Router>
       <div className='App'>
-        {/* Components placed OUTSIDE of <Routes> will appear on every single page */}
         <PromoBar />
         <Navbar />
 

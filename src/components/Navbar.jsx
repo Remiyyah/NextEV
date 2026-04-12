@@ -1,13 +1,85 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import the hook
+import React, { useState, useEffect, useRef } from 'react'; // Added useRef
+import { useNavigate } from 'react-router-dom';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
+import { Hub } from 'aws-amplify/utils';
 import './Navbar.css';
 
 const Navbar = () => {
     const [activeMenu, setActiveMenu] = useState(null);
-    const navigate = useNavigate(); // Initialize the navigate function
+    
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+    
+    const navigate = useNavigate();
+    
+    // 1. Create a ref for the dropdown container
+    const dropdownRef = useRef(null);
 
     const closeMenu = () => setActiveMenu(null);
     const openMenu = (menu) => setActiveMenu(menu);
+
+    useEffect(() => {
+        checkUser();
+
+        const unsubscribe = Hub.listen('auth', ({ payload }) => {
+            switch (payload.event) {
+                case 'signedIn':
+                    setIsAuthenticated(true);
+                    break;
+                case 'signedOut':
+                    setIsAuthenticated(false);
+                    setShowAccountDropdown(false);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    // 2. Add a new useEffect to handle "Clicking Outside"
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // If the dropdown is open AND the click happened outside of our dropdownRef
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setShowAccountDropdown(false);
+            }
+        };
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const checkUser = async () => {
+        try {
+            await getCurrentUser();
+            setIsAuthenticated(true);
+        } catch (error) {
+            setIsAuthenticated(false);
+        }
+    };
+
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+            navigate('/');
+        } catch (error) {
+            console.error('Error signing out: ', error);
+        }
+    };
+
+    const handleAccountClick = () => {
+        if (isAuthenticated) {
+            setShowAccountDropdown(!showAccountDropdown);
+        } else {
+            navigate('/login');
+        }
+    };
 
     return (
         <div 
@@ -47,19 +119,36 @@ const Navbar = () => {
                 <div className="navbar-icons" onMouseEnter={closeMenu}>
                     <i className="bi bi-question-circle"></i>
                     <i className="bi bi-globe"></i>
-                    <div className="dropdown">
-                        {/* Added onClick and pointer cursor to the icon */}
+                    
+                    {/* 3. Attach the ref here, and REMOVE the onMouseLeave event */}
+                    <div 
+                        className="account-dropdown-container" 
+                        ref={dropdownRef}
+                    >
                         <i 
                             className="bi bi-person-circle dropdown-toggle"
-                            onClick={() => navigate('/login')}
-                            style={{ cursor: 'pointer' }}
-                            title="Login"
+                            onClick={handleAccountClick}
+                            style={{ cursor: 'pointer', color: isAuthenticated ? '#D3C1A5' : 'inherit' }}
+                            title={isAuthenticated ? "Account Menu" : "Login"}
                         ></i>
+
+                        {isAuthenticated && showAccountDropdown && (
+                            <div className="account-dropdown-menu fade-in">
+                                <ul>
+                                    <li onClick={() => { setShowAccountDropdown(false); navigate('/account'); }}>
+                                        My Account
+                                    </li>
+                                    <li onClick={handleSignOut} className="sign-out-btn">
+                                        Sign Out
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
-            {/* --- MEGA MENUS --- */}
+            {/* --- MEGA MENUS (Untouched) --- */}
             
             <div id="apex-air-menu" className={`expanded-menu-content ${activeMenu === 'apex-air' ? 'active' : ''}`}>
                 <div className="menu-left-column">
