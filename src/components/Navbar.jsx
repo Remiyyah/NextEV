@@ -135,7 +135,7 @@ const Navbar = () => {
                         {isAuthenticated && showAccountDropdown && (
                             <div className="account-dropdown-menu fade-in">
                                 <ul>
-                                    <li onClick={() => { setShowAccountDropdown(false); navigate('/account'); }}>
+                                    <li onClick={() => { setShowAccountDropdown(false); navigate('/AccountPage'); }}>
                                         My Account
                                     </li>
                                     <li onClick={handleSignOut} className="sign-out-btn">
