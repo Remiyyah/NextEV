@@ -1,0 +1,162 @@
+/* --- Global Reset (Just in case) --- */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+}
+
+/* --- Core Variables --- */
+:root {
+  --gold-champagne: #D3C1A5;
+  --dark-gold: #B09F7F;
+  --panel-bg: rgba(20, 20, 20, 0.7);
+  --panel-bg-hover: rgba(30, 30, 30, 0.95);
+  --border-color: #333;
+}
+
+/* --- Main Full-Screen Wrapper --- */
+.vehicle-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  /* A subtle radial gradient gives a premium, spotlight feel rather than flat black */
+  background: radial-gradient(circle at 50% 10%, #1a1a1a 0%, #000000 80%);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- Constrained Content Area --- */
+.vehicle-page-content {
+  padding: 100px 5% 60px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Loading & Error States --- */
+.vehicle-state-container {
+  padding: 200px 20px;
+  text-align: center;
+  color: var(--gold-champagne);
+  font-family: 'Crimson Pro', 'Playfair Display', serif;
+}
+
+.vehicle-error {
+  color: #ff4444;
+}
+
+/* --- Header Section --- */
+.vehicle-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.vehicle-title {
+  font-size: 56px;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 15px;
+  font-family: 'Crimson Pro', 'Playfair Display', serif;
+  letter-spacing: 1px;
+}
+
+.vehicle-description {
+  font-size: 16px;
+  color: #a0a0a0;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+/* --- Image Section --- */
+.vehicle-image-container {
+  text-align: center;
+  margin: 60px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.vehicle-image {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 8px; 
+  background-color: #111; 
+  /* Added a subtle gold glow behind the image */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(211, 193, 165, 0.05);
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.vehicle-image:hover {
+  transform: scale(1.01);
+}
+
+/* --- Specifications Grid --- */
+.vehicle-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 60px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 20px;
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  /* Added backdrop filter for a glassmorphism effect if the background has texture */
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+.spec-item:hover {
+  transform: translateY(-8px);
+  background-color: var(--panel-bg-hover);
+  border-color: var(--gold-champagne);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(211, 193, 165, 0.1);
+}
+
+.spec-value {
+  font-size: 42px;
+  margin: 0 0 8px 0;
+  font-weight: 300;
+  color: #fff;
+  font-family: 'Crimson Pro', 'Playfair Display', serif;
+}
+
+.spec-unit {
+  font-size: 20px;
+  color: var(--gold-champagne);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+.spec-label {
+  color: #888;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* --- Animations --- */
+.fade-in {
+  animation: fadeInEffectCustom 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInEffectCustom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

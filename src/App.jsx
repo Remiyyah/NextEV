@@ -19,6 +19,9 @@ import Header from './components/Header';
 import Login from './components/Login';
 import AccountPage from './components/AccountPage';
 
+// NEW: Import the VehiclePage component
+import VehiclePage from './components/VehiclePage';
+
 Amplify.configure({
   Auth: {
     Cognito: {
@@ -55,6 +58,10 @@ function App() {
                 </>
               }
             />
+
+            {/* NEW: Dynamic Vehicle Catalog Route */}
+            {/* The :vehicleId parameter will capture 'air_pure', 'air_gt', etc. */}
+            <Route path="/vehicle/:vehicleId" element={<VehiclePage />} />
 
             {/* Public Login Route */}
             <Route path="/login" element={<Login />} />
